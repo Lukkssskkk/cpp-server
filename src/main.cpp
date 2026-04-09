@@ -30,7 +30,7 @@ void failure(std::string ERROR_MESSAGE,int ERROR_TYPE){
     if(ERROR_TYPE==0){
         logg<<ERROR_MESSAGE;
         std::cout<<ERROR_MESSAGE;
-        log.close();
+        logg.close();
         exit(EXIT_FAILURE);
     }else if(ERROR_TYPE==1){
         logg<<"[ERRO DE IMPORTACAO]"<<ERROR_MESSAGE;
