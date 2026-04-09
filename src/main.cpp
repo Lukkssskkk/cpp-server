@@ -22,18 +22,18 @@ std::mutex log_mutex;
 //Variaveis Globais
 struct sockaddr_in address;
 int addrlen = sizeof(address);
-std::fstream log("server.log",std::ios::trunc | std::ios::out);
+std::fstream logg("server.log",std::ios::trunc | std::ios::out);
 
 void failure(std::string ERROR_MESSAGE,int ERROR_TYPE){
     std::lock_guard<std::mutex> lock(log_mutex);
 
     if(ERROR_TYPE==0){
-        log<<ERROR_MESSAGE;
+        logg<<ERROR_MESSAGE;
         std::cout<<ERROR_MESSAGE;
         log.close();
         exit(EXIT_FAILURE);
     }else if(ERROR_TYPE==1){
-        log<<"[ERRO DE IMPORTACAO]"<<ERROR_MESSAGE;
+        logg<<"[ERRO DE IMPORTACAO]"<<ERROR_MESSAGE;
         std::cout<<ERROR_MESSAGE;
     }
 }
@@ -111,7 +111,7 @@ std::string server_read(int socket){
     {
         std::lock_guard<std::mutex> lock(log_mutex);
         std::cout << "REQUEST:\n" << request << "\n";
-        log << request << "\n";
+        logg << request << "\n";
     }
 
     return request;
@@ -248,7 +248,7 @@ int main(int argc,char** argv){
         queue_cv.notify_one();
     }
 
-    log.close();
+    logg.close();
     close(server_fd);
 
     return 0;
