@@ -96,26 +96,25 @@ std::string response(std::string archive,int size,std::string type){
     }
 }
 
-std::string server_read(int socket){
+std::string server_read(int socket) {
     std::string request;
-    char buffer[1024];
-
-    while (true) {
-        int bytes = read(socket, buffer, sizeof(buffer));
-        if (bytes <= 0) break;
-
+    char buffer[2048];
+    int bytes = recv(socket, buffer, sizeof(buffer) - 1, 0);
+    if (bytes > 0) {
+        buffer[bytes] = '\0';
         request.append(buffer, bytes);
-        if (request.find("\r\n\r\n") != std::string::npos) break;
     }
 
     {
         std::lock_guard<std::mutex> lock(log_mutex);
-        std::cout << "REQUEST:\n" << request << "\n";
-        logg << request << "\n";
+        if(!request.empty()) {
+            std::cout << "REQUEST RECEBIDA" << '\n';
+        }
     }
 
     return request;
 }
+
 
 std::string get_path(const std::string& request){
     size_t start = request.find("GET ");
