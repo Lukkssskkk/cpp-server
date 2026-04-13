@@ -1,12 +1,29 @@
 # C++ HTTP Server
-
 Servidor HTTP escrito em C++ com:
 - sockets
 - thread pool
 - HTTP parsing
-
+- Filesystems
+# Necessidades do codigo
+- Cmake
+- Socket
+- C++ >= C++20
+- make
+# Instalação das necessidades:
+Distros baseadas em Debian,Ubunto:
+```build
+sudo apt install build-essential
+```
+Distros baseadas em Arch:
+```build
+sudo pacman -S cmake make g++ gcc
+```
+Distros baseadas em Gentoo:
+```build
+sudo emerge cmake
+```
 # Build
-
+Compilação do servidor C++ via cmake:
 ```bash
 mkdir build
 cd build
@@ -15,8 +32,8 @@ make
 ```
 Para testar o servidor:
 ```bash
-./server --help
-./server-cpp --p 8080 --thread 5 --main-html ../example_archives/index.html --files ../example_archives/script.js ../example_archives/style.css
+./http-server-cpp --help
+./http-server-cpp --p 8080 --thread 5 --root ../example_archives --main-html index.html
 ```
 ## Como instalar o programa
 ```bash
